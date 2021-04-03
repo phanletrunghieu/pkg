@@ -51,6 +51,10 @@ func (l *Logger) Option(options ...Option) *Logger {
 	return l
 }
 
+func (l *Logger) Entry(options ...Option) *logrus.Entry {
+	return l.field.WithFields(l.fields)
+}
+
 func (l *Logger) Log(args ...interface{}) {
 	switch l.level {
 	case logrus.InfoLevel:
