@@ -21,7 +21,7 @@ func init() {
 		AttachStacktrace: true,
 	})
 	if err != nil {
-		logger.NewLogger().Option(logger.WithLevel(logrus.ErrorLevel)).Log(fmt.Sprintf("sentry.Init: %s", err))
+		logger.NewLogger(false).Option(logger.WithLevel(logrus.ErrorLevel)).Log(fmt.Sprintf("sentry.Init: %s", err))
 
 		return
 	}

@@ -17,9 +17,15 @@ type Option func(*Logger)
 
 var errMissingValue = errors.New("(MISSING)")
 
-func NewLogger() *Logger {
+func NewLogger(fullTimestamp bool) *Logger {
+	l := logrus.New()
+
+	l.SetFormatter(&logrus.TextFormatter{
+		FullTimestamp: fullTimestamp,
+	})
+
 	return &Logger{
-		field:  logrus.New(),
+		field:  l,
 		level:  logrus.InfoLevel,
 		fields: logrus.Fields{},
 	}
