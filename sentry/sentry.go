@@ -60,11 +60,30 @@ func WithFields(keyvals ...string) Option {
 }
 
 func (s *Sentry) Option(options ...Option) *Sentry {
+	newS := s.Clone()
+
 	for _, optFunc := range options {
-		optFunc(s)
+		optFunc(newS)
 	}
 
-	return s
+	return newS
+}
+
+func (s Sentry) Clone() *Sentry {
+	newS := Sentry{
+		userID:    s.userID,
+		userEmail: s.userEmail,
+		userName:  s.userName,
+
+		level:  s.level,
+		fields: map[string]string{},
+	}
+
+	for key, field := range s.fields {
+		newS.fields[key] = field
+	}
+
+	return &newS
 }
 
 func (s *Sentry) Log(err error) {

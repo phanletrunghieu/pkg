@@ -50,11 +50,27 @@ func WithFields(keyvals ...interface{}) Option {
 }
 
 func (l *Logger) Option(options ...Option) *Logger {
+	newL := l.Clone()
+
 	for _, optFunc := range options {
-		optFunc(l)
+		optFunc(newL)
 	}
 
-	return l
+	return newL
+}
+
+func (l Logger) Clone() *Logger {
+	newL := Logger{
+		field:  l.field,
+		level:  l.level,
+		fields: logrus.Fields{},
+	}
+
+	for key, field := range l.fields {
+		newL.fields[key] = field
+	}
+
+	return &newL
 }
 
 func (l *Logger) Entry(options ...Option) *logrus.Entry {
