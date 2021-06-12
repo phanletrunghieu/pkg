@@ -4,10 +4,10 @@ import "github.com/pkg/errors"
 
 // AppError .
 type AppError struct {
-	Raw       error
-	ErrorCode int
-	HTTPCode  int
-	Message   string
+	Raw       error  `json:"raw,omitempty"`
+	ErrorCode int    `json:"code,omitempty"`
+	HTTPCode  int    `json:"status,omitempty"`
+	Message   string `json:"message,omitempty"`
 }
 
 func (e AppError) Error() string {
