@@ -22,6 +22,7 @@ func NewLogger(fullTimestamp bool) *Logger {
 
 	l.SetFormatter(&logrus.TextFormatter{
 		FullTimestamp: fullTimestamp,
+		DisableColors: true,
 	})
 
 	return &Logger{
@@ -80,16 +81,16 @@ func (l *Logger) Entry(options ...Option) *logrus.Entry {
 func (l *Logger) Log(args ...interface{}) {
 	switch l.level {
 	case logrus.InfoLevel:
-		l.field.WithFields(l.fields).Info(args)
+		l.field.WithFields(l.fields).Info(args...)
 	case logrus.ErrorLevel:
-		l.field.WithFields(l.fields).Error(args)
+		l.field.WithFields(l.fields).Error(args...)
 	case logrus.DebugLevel:
-		l.field.WithFields(l.fields).Debug(args)
+		l.field.WithFields(l.fields).Debug(args...)
 	case logrus.WarnLevel:
-		l.field.WithFields(l.fields).Warn(args)
+		l.field.WithFields(l.fields).Warn(args...)
 	case logrus.TraceLevel:
-		l.field.WithFields(l.fields).Trace(args)
+		l.field.WithFields(l.fields).Trace(args...)
 	default:
-		l.field.WithFields(l.fields).Print(args)
+		l.field.WithFields(l.fields).Print(args...)
 	}
 }
