@@ -1,10 +1,12 @@
 package jwt
 
 import (
+	"context"
 	"errors"
 	"time"
 
 	"github.com/golang-jwt/jwt/v4"
+	"github.com/phanletrunghieu/pkg/model"
 )
 
 var ErrInvalidToken = errors.New("Invalid token")
@@ -41,4 +43,10 @@ func VerifyToken(signedToken string, key []byte) (*Claims, error) {
 	}
 
 	return nil, ErrInvalidToken
+}
+
+func SetTokenPayload(ctx context.Context, data interface{}) context.Context {
+	newCtx := context.WithValue(ctx, model.KeyContextLogger, data)
+
+	return newCtx
 }
